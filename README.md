@@ -1,15 +1,12 @@
-Here is a complete `README.md` template based on the architecture and flow shown in your screenshots. You can copy this directly into your GitHub repository.
-
----
-
-```markdown
 # Highly Available Voting Application on AWS
+
+![Final Application View](final%20image.png)
 
 ## Overview
 This project demonstrates the deployment of a highly available, scalable PHP web application ("Vote for the Best Phone Brand!") on Amazon Web Services (AWS). It utilizes an Auto Scaling Group (ASG) and an Application Load Balancer (ALB) to ensure traffic is distributed evenly across multiple EC2 instances, providing fault tolerance and seamless scaling.
 
 ## Architecture Components
-Based on the AWS Management Console configuration, this project implements the following resources:
+This project implements the following resources:
 * **Launch Template (`voting-app`):** Defines the underlying EC2 configuration, including the AMI, instance type (`t2.micro`), and user data script to bootstrap the Apache server and PHP application.
 * **Target Group (`voting-tb`):** Routes requests to registered EC2 targets on HTTP Port 80.
 * **Application Load Balancer (`voting-lb`):** An internet-facing load balancer spanning 3 Availability Zones, distributing incoming user traffic to the healthy instances in the Target Group.
@@ -32,12 +29,16 @@ Based on the AWS Management Console configuration, this project implements the f
 4. Configure the Protocol to **HTTP** and Port to **80**.
 5. Select your default VPC and configure the health checks to ensure traffic only flows to healthy PHP servers.
 
+![Target Group Configuration](tg.png)
+
 ### Step 3: Provision the Application Load Balancer
 1. Navigate to **EC2 Dashboard > Load Balancers**.
 2. Create an **Application Load Balancer** named **`voting-lb`**.
 3. Set the scheme to **Internet-facing** and the IP address type to **IPv4**.
 4. Select your VPC and map it across 3 Availability Zones (e.g., `ap-south-1a`, `ap-south-1b`, `ap-south-1c`).
 5. Configure the listener on Port 80 to forward traffic to the `voting-tb` Target Group.
+
+![Load Balancer Configuration](lb.png)
 
 ### Step 4: Setup the Auto Scaling Group
 1. Navigate to **EC2 Dashboard > Auto Scaling Groups**.
@@ -48,7 +49,12 @@ Based on the AWS Management Console configuration, this project implements the f
    * **Desired capacity:** 2
    * **Minimum capacity:** 2
    * **Maximum capacity:** 4
-6. Once launched, verify in the EC2 console that the instances are running and pass the `2/2` status checks.
+
+![Auto Scaling Group](asg.png)
+
+Once launched, verify in the EC2 console that the instances are running and pass the `2/2` status checks:
+
+![EC2 Instances](ec2.png)
 
 ### Step 5: Verify the Deployment
 1. Go to the Load Balancer dashboard and copy the **DNS name** (e.g., `voting-lb-1383968828.ap-south-1.elb.amazonaws.com`).
@@ -60,5 +66,3 @@ Based on the AWS Management Console configuration, this project implements the f
 
 ## Author
 **Badri Shanmukha**
-
-```
